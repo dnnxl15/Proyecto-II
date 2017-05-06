@@ -1,5 +1,6 @@
 package proyecto.crowly.logic;
 
-public class Body {
+public class Body 
+{
 
 }
