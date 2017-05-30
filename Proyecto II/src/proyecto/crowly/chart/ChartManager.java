@@ -2,31 +2,52 @@ package proyecto.crowly.chart;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import proyecto.crowly.library.*;
 
 import proyecto.crowly.interfaces.IConstants;
-import proyecto.crowly.library.*;
 import proyecto.crowly.logic.*;
 
 public abstract class ChartManager implements IConstants
 {
-	public List<List> generateGraphy(ArrayList<Body> pListBody)
+	protected String file;
+	protected TextReader objectReader;
+	
+	public ChartManager()
 	{
-		return null;// se crea la lista[[],[]]
+		objectReader = TextReader.getInstance(); //get the instance
 	}
 	
-	public String createGraphy(String pContent)
+	protected ArrayList<ArrayList> createGraphy(ArrayList<VideoContein> pListOfVideoContein) //create the graphy
 	{
-		TextReader n = new TextReader();
-		String p = n.readFile(IConstants.LIST_OF_FILES_CHARTS[0]);//"C:/Users/dnnxl/OneDrive/Documentos/Proyecto Crowly/Documents/BarChartHeader.txt");
-		p = p.replace(IConstants.IDENTIFIER,pContent);
-		return p; // se crea el grafico
+		ArrayList<ArrayList> Statistics = new ArrayList<ArrayList>();
+		ArrayList Header = new ArrayList();
+		
+		Header.add(TIME_HEADER);
+		Header.add(PEOPLE_HEADER);
+		Statistics.add(Header);
+		
+		SimpleDateFormat Formatter = new SimpleDateFormat("HH:mm:ss");
+		for(int i = 0; i < pListOfVideoContein.size(); i++)
+		{
+			Date Hour = pListOfVideoContein.get(i).getHour();
+			int MountOfBody = pListOfVideoContein.get(i).getMountOfBody();
+			ArrayList Data = new ArrayList();
+			String HourString = Formatter.format(Hour);
+			Data.add(SINGLE_QUOTE + HourString + SINGLE_QUOTE);
+			Data.add(MountOfBody);
+			Statistics.add(Data);
+		}
+		return Statistics;
 	}
 	
-	public void openBrowser(String pFile)
+	public void openBrowser() //open the browser
 	{
-		File archivo = new File(pFile);//"C:/Users/dnnxl/Documents/CodeHtml.html"); 
+		File archivo = new File(this.file); //archivo type file
 		Runtime runTime = Runtime.getRuntime(); 
 		try 
 		{
@@ -34,6 +55,15 @@ public abstract class ChartManager implements IConstants
 		} 
 		catch (IOException e) 
 		{
-		}//"C:/Program Files (x86)/Google/Chrome/Application/chrome.exe "+archivo); 
+		} 
+	}
+	
+	public GraphyType getType() //get the graph type
+	{
+		return null;
+	}
+
+	public void generateGraphy(ArrayList<VideoContein> pListOfVideoContein) 
+	{		
 	}
 }

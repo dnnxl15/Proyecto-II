@@ -5,37 +5,38 @@ import java.util.UUID;
 
 public class Body 
 {
-	private int PosX;
-	private int PosY;
-	private Date Time;
-	private UUID Id;
+	private double PositionX; //position on the axis x
+	private double PositionY; //position on the axis y
+	private Date Time; //time of th Date type
+	private UUID Id; //id
 	
-	public Body(int pX, int pY, Date videoTime)
+	public Body(double pX, double pY, Date pVideoTime)
 	{
 		Id = UUID.randomUUID();
-		Time = videoTime;
-		PosY = pY;
-		PosX = pX;
+		Time = pVideoTime;
+		PositionY = pY;
+		PositionX = pX;
 	}
 
-	public int getPosX() 
+/*~~~~~~~~~~~~~~~~~GETTERS & SETTERS~~~~~~~~~~~~~~~~~*/	
+	public double getPositionX() 
 	{
-		return PosX;
+		return PositionX;
 	}
 
-	public void setPosX(int posX)
+	public void setPositionX(int pPositionX)
 	{
-		PosX = posX;
+		PositionX = pPositionX;
 	}
 
-	public int getPosY() 
+	public double getPositionY() 
 	{
-		return PosY;
+		return PositionY;
 	}
 
-	public void setPosY(int posY) 
+	public void setPositionY(int pPositionY) 
 	{
-		PosY = posY;
+		PositionY = pPositionY;
 	}
 
 	public Date getTime() 
@@ -43,9 +44,9 @@ public class Body
 		return Time;
 	}
 
-	public void setTime(Date time) 
+	public void setTime(Date pTime) 
 	{
-		this.Time = time;
+		this.Time = pTime;
 	}
 
 	public UUID getId() 
@@ -53,8 +54,8 @@ public class Body
 		return Id;
 	}
 
-	public void setId(UUID id) 
+	public void setId(UUID pId) 
 	{
-		Id = id;
+		Id = pId;
 	}	
 }

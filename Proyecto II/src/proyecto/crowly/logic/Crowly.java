@@ -22,47 +22,24 @@ public class Crowly {
 	private JFrame frmCrowly;
 	private Control ControlCrowly;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Crowly window = new Crowly();
-					window.frmCrowly.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the application.
-	 */
 	public Crowly() 
 	{
 		initialize();
 		ControlCrowly = new Control();
 	}
 
-	
-	
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
+	private void initialize()
+	{
 		frmCrowly = new JFrame();
 		frmCrowly.setTitle("Crowly");
 		frmCrowly.getContentPane().setBackground(new Color(0, 153, 255));
 		frmCrowly.getContentPane().setForeground(Color.RED);
 		frmCrowly.setBounds(100, 100, 498, 472);
 		frmCrowly.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmCrowly.getContentPane().setLayout(null);
-		
+		frmCrowly.getContentPane().setLayout(null);	
 		JButton btnNewButton = new JButton("Bar");
-		btnNewButton.addActionListener(new ActionListener() {
+		btnNewButton.addActionListener(new ActionListener() 
+		{
 			public void actionPerformed(ActionEvent arg0) 
 			{
 				ControlCrowly.openBrowser(GraphyType.BAR);
@@ -71,8 +48,9 @@ public class Crowly {
 		btnNewButton.setBounds(24, 328, 110, 33);
 		frmCrowly.getContentPane().add(btnNewButton);
 		
-		JButton btnScartter = new JButton("Scatter");
-		btnScartter.addActionListener(new ActionListener() {
+		JButton btnScartter = new JButton("Scartter");
+		btnScartter.addActionListener(new ActionListener() 
+		{
 			public void actionPerformed(ActionEvent arg0) 
 			{
 				ControlCrowly.openBrowser(GraphyType.SCARTTER);
@@ -100,7 +78,8 @@ public class Crowly {
 		frmCrowly.getContentPane().add(lblCrowly);
 		
 		JButton btnNewButton_2 = new JButton("Process Video");
-		btnNewButton_2.addActionListener(new ActionListener() {
+		btnNewButton_2.addActionListener(new ActionListener() 
+		{
 			public void actionPerformed(ActionEvent arg0)
 			{
 				ControlCrowly.prosecute();
