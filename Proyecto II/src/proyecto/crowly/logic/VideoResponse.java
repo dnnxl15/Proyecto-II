@@ -2,19 +2,20 @@ package proyecto.crowly.logic;
 
 public class VideoResponse 
 {
-	private String VideoResponseURL;
-	private String VideoKey;
-	private String Content;
-	private boolean Procesado;
+	private String VideoResponseURL; //Response of the video URL
+	private String VideoKey; //key to do the response
+	private String Content; //content of the respone 
+	private String VideoUrl; //the URL of the video
+	private boolean Processed; //bool if it is processed
 	
 	public VideoResponse(String pURL, String pKey, String pContent)
-	{
+	{ 
 		VideoResponseURL = pURL;
 		VideoKey = pKey;
 		Content = pContent;
-		Procesado = false;
+		Processed = false;
 	}
-
+/*~~~~~~~~~~~~~~~~~GETTERS & SETTERS~~~~~~~~~~~~~~~~~*/
 	public String getVideoResponseURL() 
 	{
 		return VideoResponseURL;
@@ -23,6 +24,16 @@ public class VideoResponse
 	public void setVideoResponseURL(String videoResponseURL) 
 	{
 		VideoResponseURL = videoResponseURL;
+	}
+	
+	public void setVideoUrl(String pVideoUrl)
+	{
+		VideoUrl = pVideoUrl;
+	}
+	
+	public String getVideoUrl()
+	{
+		return VideoUrl;
 	}
 
 	public String getVideoKey() 
@@ -35,14 +46,14 @@ public class VideoResponse
 		VideoKey = videoKey;
 	}
 
-	public boolean isProcesado() 
+	public boolean isProcessed() 
 	{
-		return Procesado;
+		return Processed;
 	}
 
-	public void setProcesado(boolean procesado) 
+	public void setProcessed(boolean processed) 
 	{
-		Procesado = procesado;
+		Processed = processed;
 	}
 
 	public String getContent() 

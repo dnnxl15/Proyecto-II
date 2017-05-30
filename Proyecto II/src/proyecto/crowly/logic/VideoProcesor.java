@@ -6,40 +6,42 @@ import proyecto.crowly.interfaces.*;
 
 public class VideoProcesor implements IConstants
 {
-	private MSClient MsClient;
-	private ArrayList<Body> EveryBody;
+	private MSClient MsClient; //the MsClient of the type MSCliente
+	private ArrayList<Body> Bodys; //arraylist of the bodies
 	
 	public VideoProcesor()
 	{
 		MsClient = new MSClient();
 	}
 	
-	public void analizarVideos()
+	public ArrayList<Body> getBodys() //grt the bodies
+	{
+		return this.Bodys;
+	}
+	
+	public void analyzeVideos() //analyze the videos
 	{
 		try 
 		{
-			for(String urlVideo : LISTA_VIDEOS) {
-				MsClient.procesarVideo(urlVideo);
-				Thread.sleep(ESPERA_ENTRE_LLAMADAS);
+			for(String UrlVideo : LIST_OF_VIDEOS) //analyze each video
+			{
+				MsClient.processVideo(UrlVideo);
+				Thread.sleep(WAIT_BETWEEN_CALLS); //the thread sleep between calls
 			}
 			
-			Thread.sleep(60000);
+			Thread.sleep(WAIT_BETWEEN_CALLS); //the thread sleep between calls
 			
-			for(VideoResponse video : MsClient.getVideosPendientes()) {
-				MsClient.procesarRespuestaVideo(video);
-				Thread.sleep(ESPERA_ENTRE_LLAMADAS);
+			for(VideoResponse Video : MsClient.getPendingVideos())  //analyze the pending videos
+			{
+				MsClient.processAnswerVideo(Video);
+				Thread.sleep(WAIT_BETWEEN_CALLS); //the thread sleep between calls
 			}
 			
-			EveryBody = MsClient.getCuerpos();
-		} catch (Exception ex)
+			Bodys = MsClient.getBodys(); //get the bodies
+		} 
+		catch (Exception ex)
 		{
 			ex.printStackTrace();
 		}
-	}
-	
-	public static void main(String args[])
-	{
-		VideoProcesor proc = new VideoProcesor();
-		proc.analizarVideos();
 	}
 }

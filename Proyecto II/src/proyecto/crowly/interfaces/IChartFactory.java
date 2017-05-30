@@ -1,8 +1,9 @@
 package proyecto.crowly.interfaces;
 
+import proyecto.crowly.chart.ChartManager;
 import proyecto.crowly.library.*;
 
 public interface IChartFactory 
 {
-	public void createChart(GraphyType pType);
+	public ChartManager createChart(GraphyType pType);
 }

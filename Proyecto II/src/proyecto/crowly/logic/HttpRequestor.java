@@ -1,85 +1,74 @@
 package proyecto.crowly.logic;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.*;
 import proyecto.crowly.interfaces.*;
-import javax.net.ssl.HttpsURLConnection;
+import java.net.URI;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 
 public class HttpRequestor implements IConstants
 {
-
-	public static VideoResponse post(String pUrl, String pPayload, String pMSKey)
+	public static VideoResponse post(String pUrl, String pPayload, String pMSKey) //post of the VideoResponse
 	{
-		VideoResponse result = null;
-		
-		HttpClient httpclient = HttpClients.createDefault();
+		VideoResponse Result = null;
+		HttpClient Httpclient = HttpClients.createDefault();
         try
         {
-            URIBuilder builder = new URIBuilder(pUrl);
-
-            /*
-            builder.setParameter("sensitivityLevel", "{string}");
-            builder.setParameter("frameSamplingValue", "{number}");
-            builder.setParameter("detectionZones", "{string}");
-            builder.setParameter("detectLightChange", "{boolean}");
-            builder.setParameter("mergeTimeThreshold", "{number}");
-            */
-            
-            URI uri = builder.build();
-            HttpPost request = new HttpPost(uri);
-            request.setHeader("Content-Type", "application/json");
-            request.setHeader("Ocp-Apim-Subscription-Key", pMSKey);
+            URIBuilder Builder = new URIBuilder(pUrl);
+            URI Uri = Builder.build();
+            HttpPost Request = new HttpPost(Uri);
+            Request.setHeader(CONTENT_TYPE, JSON_APPLICATION);
+            Request.setHeader(SUBSCRIPTION_KEY, pMSKey);
 
             // Request body
-            StringEntity reqEntity = new StringEntity(pPayload);
-            request.setEntity(reqEntity);
+            StringEntity ReqEntity = new StringEntity(pPayload);
+            Request.setEntity(ReqEntity);
 
-            HttpResponse response = httpclient.execute(request);
-            HttpEntity entity = response.getEntity();
+            HttpResponse Response = Httpclient.execute(Request);
+            HttpEntity Entity = Response.getEntity();
                                                 
-            if (entity != null) 
+            if (Entity != null) 
             {
-                String location = response.getHeaders(LOCATION_RESULT_URL_KEY).length>0?response.getHeaders(LOCATION_RESULT_URL_KEY)[0].getValue() : "";
-                String key = response.getHeaders(LOCATION_RESULT_URL_KEY).length>0?response.getHeaders(LOCATION_RESULT_ACCESS_KEY)[0].getValue() : "";            	
-                result = new VideoResponse(location, key, EntityUtils.toString(entity));
+                String location = Response.getHeaders(LOCATION_RESULT_URL_KEY).length>0?Response.getHeaders(LOCATION_RESULT_URL_KEY)[0].getValue() : "";
+                String key = Response.getHeaders(LOCATION_RESULT_URL_KEY).length>0?Response.getHeaders(LOCATION_RESULT_ACCESS_KEY)[0].getValue() : "";            	
+                Result = new VideoResponse(location, key, EntityUtils.toString(Entity));
             }
         }
         catch (Exception e)
         {
-            System.out.println(e.getMessage());
         }
-		return result;
+        return Result;
 	}
 	
-	public static VideoResponse get(VideoResponse pVideoResponse, String pMSKey)
+	public static VideoResponse get(VideoResponse pVideoResponse, String pMSKey) //get the video response
 	{
-		
-		HttpClient httpclient = HttpClients.createDefault();
+		HttpClient Httpclient = HttpClients.createDefault();
         try
         {
-            URIBuilder builder = new URIBuilder(pVideoResponse.getVideoResponseURL());
+            URIBuilder Builder = new URIBuilder(pVideoResponse.getVideoResponseURL());
 
-            URI uri = builder.build();
-            HttpGet request = new HttpGet(uri);
-            request.setHeader("Content-Type", "application/json");
-            request.setHeader("Ocp-Apim-Subscription-Key", pMSKey);
+            URI Uri = Builder.build();
+            HttpGet Request = new HttpGet(Uri);
+            Request.setHeader(CONTENT_TYPE, JSON_APPLICATION);
+            Request.setHeader(SUBSCRIPTION_KEY, pMSKey);
 
-            HttpResponse response = httpclient.execute(request);
-            HttpEntity entity = response.getEntity();
+            HttpResponse Response = Httpclient.execute(Request);
+            HttpEntity Entity = Response.getEntity();
                                                 
-            if (entity != null) 
+            if (Entity != null) 
             {
-                pVideoResponse.setContent(EntityUtils.toString(entity));
+                pVideoResponse.setContent(EntityUtils.toString(Entity));
             }
         }
         catch (Exception e)
         {
-            System.out.println(e.getMessage());
         }
-		return pVideoResponse;
+        return pVideoResponse;
 	}
-	
 }

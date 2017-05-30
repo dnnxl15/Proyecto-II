@@ -2,88 +2,65 @@ package proyecto.crowly.logic;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 
 public class TextReader 
 {
-	public String readFile(String pFile)
+	private static TextReader Instance; //instance
+
+	private TextReader()
 	{
-		String texto = "";
+	}
+	
+	public synchronized static TextReader getInstance() //synchronized the TextReader
+	{
+		if (Instance==null)
+		{
+			Instance = new TextReader();
+		}
+		return Instance;
+	}
+	
+	
+	public String readFile(String pFile) //read the file
+	{
+		String Text = "";
 	    try
 	    { 
-	    	File Archivo = new File(pFile); // Crea el archivo.
-	    	FileReader fr = new FileReader(Archivo); // Crea el file.
-	    	BufferedReader bf = new BufferedReader(fr);  // Lo lee.
-	   		String linea;
-	   		String cadena = "";
-	   		while ((linea = bf.readLine()) != null)
+	    	File TextFile = new File(pFile); //TextFile of the File type
+	    	FileReader ReaderText = new FileReader(TextFile);  //ReaderText of the FileReader type
+	    	BufferedReader ReaderBuffer = new BufferedReader(ReaderText); //ReaderBuffer of the BufferedReader type
+	   		String Line;
+	   		String Chain = "";
+	   		while ((Line = ReaderBuffer.readLine()) != null) //read each line
 	   		{
-    			cadena = cadena + linea;
+	   			Chain = Chain + Line;
     		}
-	    	texto = cadena;
-	   		bf.close();
+	    	Text = Chain; //Text equal to CHain
+	    	ReaderBuffer.close();
 	   	}
 	   	catch(Exception e)
 	   	{
     	}
-	    return texto;
+	    return Text;
 	}
 	
-	public String readHtml(String pFile) throws IOException
+	public void writeFile(String pContent, String pFileName) throws IOException //write the file
 	{
-		String cadena;
-	    String lineas = "";
-	    FileReader f = new FileReader("ejemplo.html");
-	    BufferedReader b = new BufferedReader(f);
-	    while((cadena = b.readLine())!=null) 
-	    {
-	    	System.out.println(cadena);
-	        lineas = lineas + b.readLine();
-
-	    }
-	    b.close();
-	    return lineas;
-	}
-	
-	public void writeFileHtml(String pContent, String pFileName) throws IOException
-	{
-		FileWriter filewriter = null;
-		PrintWriter printw = null;        
+		FileWriter WriterFile = null; //WriterFile of FileWriter type
+		PrintWriter WriterPrinter = null; //WeiterPrinter of PrintWriter type equals to null 
 		 try
 		 {
-			 filewriter = new FileWriter(pFileName);//declarar el archivo
-	         printw = new PrintWriter(filewriter);//declarar un impresor
-		     printw.println(pContent);
-		     printw.close();//cerramos el archivo
+			 WriterFile = new FileWriter(pFileName);
+			 WriterPrinter = new PrintWriter(WriterFile);
+			 WriterPrinter.println(pContent);
+			 WriterPrinter.close();
 		 }
 		 finally
 		 {
-			 
 		 }
-	}
-	
-	public static void main(String[] args)
-	{
-		/*
-		TextReader n = new TextReader();
-		String p = n.readFile("C:/Users/dnnxl/OneDrive/Documentos/Proyecto Crowly/Documents/BarChartHeader.txt");
-		p = p.replace("@@DATA@@","hooooo");
-		//p.replaceAll("@@DATA@@", "hello");
-		System.out.println(n.readFile("C:/Users/dnnxl/OneDrive/Documentos/Proyecto Crowly/Documents/BarChartHeader.txt"));
-		System.out.println(p);*/
-		ArrayList<String> list = new ArrayList<String>();
-		list.add("one");
-		list.add("two");
-		list.add("three");
-
-		
-		String p = list.toString();
-		System.out.println(p);
-
 	}
 }
