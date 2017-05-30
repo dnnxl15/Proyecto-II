@@ -16,10 +16,12 @@ public class BarChart extends ChartManager implements IConstants
 		String content = objectReader.readFile(LIST_OF_HEADERS_CHARTS[BAR_CHART]);
 		String pContentNew = ContentInfo.toString();
 		content = content.replace(IDENTIFIER,pContentNew);
-		try {
+		try 
+		{
 			objectReader.writeFile(content, LIST_OF_FILES_CHARTS[BAR_CHART]);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+		} 
+		catch (IOException e) 
+		{
 			e.printStackTrace();
 		}
 		this.file = LIST_OF_FILES_CHARTS[BAR_CHART];
